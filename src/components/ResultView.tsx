@@ -175,6 +175,24 @@ export default function ResultView({ card, onBack }: Props) {
         <button className="result__back" onClick={onBack}>
           <ArrowLeft size={16} /> GET SCOUTED ⚽
         </button>
+        <div className="result__topbar-actions">
+          <a
+            href="https://github.com/ShubhamKumar6299/codolioXfifa#readme"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="result__topbar-link"
+          >
+            how it works
+          </a>
+          <a
+            href="https://github.com/ShubhamKumar6299/codolioXfifa"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="result__topbar-btn"
+          >
+            Star on GitHub ⭐
+          </a>
+        </div>
       </div>
 
       {/* Header: Rating + Name + Archetype */}

@@ -43,6 +43,25 @@ function App() {
           <ResultView card={card} onBack={handleBack} />
         ) : (
           <main className="home">
+            <header className="home__header">
+              <a
+                href="https://github.com/ShubhamKumar6299/codolioXfifa#readme"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="home__header-link"
+              >
+                how it works
+              </a>
+              <a
+                href="https://github.com/ShubhamKumar6299/codolioXfifa"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="home__header-btn"
+              >
+                Star on GitHub ⭐
+              </a>
+            </header>
+
             <div className="home__content">
               <div className="home__left">
                 <ScoutForm
