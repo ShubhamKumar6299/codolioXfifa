@@ -22,6 +22,8 @@ export interface CodolioSignals {
   reputation: number;
 }
 
+export type HeroType = 'spider-man' | 'batman' | 'iron-man' | 'joker' | 'captain-america' | 'ninja';
+
 export interface Card {
   signals: CodolioSignals;
   stats: Stats;
@@ -31,6 +33,7 @@ export interface Card {
   name: string;
   username: string;
   avatarUrl: string;
+  hero?: HeroType;
 }
 
 export const STAT_KEYS: StatKey[] = ['pac', 'sho', 'pas', 'dri', 'def', 'phy'];

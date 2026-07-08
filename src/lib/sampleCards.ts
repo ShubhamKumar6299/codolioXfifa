@@ -91,5 +91,5 @@ const SAMPLE_SIGNALS: CodolioSignals[] = [
 ];
 
 export function getSampleCards(): Card[] {
-  return SAMPLE_SIGNALS.map(buildCard);
+  return SAMPLE_SIGNALS.map(sig => buildCard(sig));
 }

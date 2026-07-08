@@ -213,6 +213,14 @@ export default function ResultView({ card, onBack }: Props) {
             <span className="result__header-archetype">{archetype.title}</span>
             <span className="result__header-sep">·</span>
             <span className="result__header-handle">@{card.username}</span>
+            {card.hero && (
+              <>
+                <span className="result__header-sep">·</span>
+                <span className="result__header-hero" style={{ textTransform: 'capitalize', color: 'var(--accent)' }}>
+                  {card.hero.replace('-', ' ')} Vibe
+                </span>
+              </>
+            )}
           </div>
           <p className="result__header-desc">
             <strong>GENERATIONAL TALENT:</strong> {archetype.desc}

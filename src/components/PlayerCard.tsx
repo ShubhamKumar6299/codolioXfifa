@@ -19,8 +19,20 @@ const STAT_CELLS: { k: StatKey; l: string; col: number; row: number }[] = [
   { k: 'phy', l: 'PHY', col: 1, row: 2 },
 ];
 
+function getHeroEmoji(hero?: string): string {
+  switch (hero) {
+    case 'spider-man': return '🕷️';
+    case 'batman': return '🦇';
+    case 'iron-man': return '🤖';
+    case 'joker': return '🃏';
+    case 'captain-america': return '🛡️';
+    case 'ninja': return '🥷';
+    default: return '';
+  }
+}
+
 function PlayerCard({ card, style }: { card: Card; style?: CSSProperties }) {
-  const t = resolveCardTheme(card.finish);
+  const t = resolveCardTheme(card.finish, card.hero);
   const displayName = (
     card.name.length <= 12 ? card.name : card.name.split(' ').slice(-1)[0]
   ).toUpperCase();
@@ -30,11 +42,11 @@ function PlayerCard({ card, style }: { card: Card; style?: CSSProperties }) {
     e.currentTarget.src = AVATAR_FALLBACK;
   };
 
-  const isDark = card.finish === 'totw' || card.finish === 'toty';
+  const isDark = card.finish === 'totw' || card.finish === 'toty' || card.hero === 'batman' || card.hero === 'ninja' || card.hero === 'spider-man' || card.hero === 'iron-man' || card.hero === 'joker' || card.hero === 'captain-america';
 
   return (
     <div
-      className={`player-card player-card--${card.finish}`}
+      className={`player-card player-card--${card.hero ? `hero-${card.hero}` : card.finish}`}
       style={{
         ...style,
         '--card-bg': t.bg,
@@ -51,12 +63,24 @@ function PlayerCard({ card, style }: { card: Card; style?: CSSProperties }) {
 
       {/* Card surface */}
       <div className="player-card__surface">
+        {/* Shuriken Ninja Watermark for Ninja Vibe */}
+        <div className="player-card__shuriken-watermark">
+          <svg viewBox="0 0 100 100" fill="currentColor" width="100%" height="100%">
+            <path d="M50 5 L58 42 L95 50 L58 58 L50 95 L42 58 L5 50 L42 42 Z M50 44 C46.7 44 44 46.7 44 50 C44 53.3 46.7 56 50 56 C53.3 56 56 53.3 56 50 C56 46.7 53.3 44 50 44 Z" />
+          </svg>
+        </div>
+
         {/* Top section: Overall + Position */}
         <div className="player-card__header">
           <div className="player-card__rating">
             <span className="player-card__overall">{pad2(card.overall)}</span>
             <span className="player-card__position">{card.position}</span>
           </div>
+          {card.hero && (
+            <div className="player-card__hero-badge" title={card.hero}>
+              {getHeroEmoji(card.hero)}
+            </div>
+          )}
         </div>
 
         {/* Avatar */}
@@ -90,7 +114,9 @@ function PlayerCard({ card, style }: { card: Card; style?: CSSProperties }) {
         </div>
 
         {/* Username watermark */}
-        <div className="player-card__username">@{card.username}</div>
+        <div className="player-card__username">
+          @{card.username} {card.hero ? getHeroEmoji(card.hero) : '⚽'}
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import type { Finish } from './types';
+import type { Finish, HeroType } from './types';
 
 export interface CardTheme {
   bg: string;          // card background gradient
@@ -67,18 +67,80 @@ const THEMES: Record<Finish, CardTheme> = {
   },
 };
 
-export function resolveCardTheme(finish: Finish): CardTheme {
+const HERO_THEMES: Record<HeroType, CardTheme> = {
+  'spider-man': {
+    bg: 'linear-gradient(160deg, #991b1b 0%, #1e3a8a 50%, #0b1329 100%)',
+    border: '#ef4444',
+    ink: '#ffffff',
+    inkSoft: '#f87171',
+    glow: 'rgba(239, 68, 68, 0.55)',
+    statBar: '#ef4444',
+    badge: 'rgba(239, 68, 68, 0.25)',
+  },
+  'batman': {
+    bg: 'linear-gradient(160deg, #18181b 0%, #09090b 50%, #020202 100%)',
+    border: '#f59e0b',
+    ink: '#ffffff',
+    inkSoft: '#a1a1aa',
+    glow: 'rgba(245, 158, 11, 0.45)',
+    statBar: '#f59e0b',
+    badge: 'rgba(245, 158, 11, 0.2)',
+  },
+  'iron-man': {
+    bg: 'linear-gradient(160deg, #7f1d1d 0%, #450a0a 45%, #d97706 100%)',
+    border: '#f59e0b',
+    ink: '#ffffff',
+    inkSoft: '#fcd34d',
+    glow: 'rgba(245, 158, 11, 0.55)',
+    statBar: '#f59e0b',
+    badge: 'rgba(245, 158, 11, 0.25)',
+  },
+  'joker': {
+    bg: 'linear-gradient(160deg, #581c87 0%, #2e1065 50%, #064e3b 100%)',
+    border: '#22c55e',
+    ink: '#ffffff',
+    inkSoft: '#c084fc',
+    glow: 'rgba(34, 197, 94, 0.55)',
+    statBar: '#22c55e',
+    badge: 'rgba(34, 197, 94, 0.25)',
+  },
+  'captain-america': {
+    bg: 'linear-gradient(160deg, #1d4ed8 0%, #1e3a8a 50%, #b91c1c 100%)',
+    border: '#ffffff',
+    ink: '#ffffff',
+    inkSoft: '#93c5fd',
+    glow: 'rgba(255, 255, 255, 0.5)',
+    statBar: '#3b82f6',
+    badge: 'rgba(239, 68, 68, 0.25)',
+  },
+  'ninja': {
+    bg: 'linear-gradient(160deg, #09090b 0%, #18181b 50%, #020202 100%)',
+    border: '#dc2626',
+    ink: '#f4f4f5',
+    inkSoft: '#a1a1aa',
+    glow: 'rgba(220, 38, 38, 0.5)',
+    statBar: '#dc2626',
+    badge: 'rgba(220, 38, 38, 0.2)',
+  },
+};
+
+export function resolveCardTheme(finish: Finish, hero?: HeroType): CardTheme {
+  if (hero && HERO_THEMES[hero]) {
+    return HERO_THEMES[hero];
+  }
   return THEMES[finish];
 }
 
-export function resolveResultTheme(finish: Finish) {
-  const t = THEMES[finish];
+export function resolveResultTheme(finish: Finish, hero?: HeroType) {
+  const t = resolveCardTheme(finish, hero);
   return {
     ...t,
-    pageBg: finish === 'totw' || finish === 'toty'
-      ? 'radial-gradient(ellipse at 50% 30%, rgba(74,144,217,0.08) 0%, transparent 70%)'
-      : finish === 'icon'
-        ? 'radial-gradient(ellipse at 50% 30%, rgba(255,215,0,0.06) 0%, transparent 70%)'
-        : 'none',
+    pageBg: hero
+      ? `radial-gradient(ellipse at 50% 30%, ${t.glow} 0%, transparent 70%)`
+      : finish === 'totw' || finish === 'toty'
+        ? 'radial-gradient(ellipse at 50% 30%, rgba(74,144,217,0.08) 0%, transparent 70%)'
+        : finish === 'icon'
+          ? 'radial-gradient(ellipse at 50% 30%, rgba(255,215,0,0.06) 0%, transparent 70%)'
+          : 'none',
   };
 }

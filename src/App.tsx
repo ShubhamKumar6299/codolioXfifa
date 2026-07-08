@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Card } from './lib/types';
+import type { Card, HeroType } from './lib/types';
 import { buildCard } from './lib/scoring';
 import { fetchCodolioProfile } from './lib/codolioClient';
 import Background from './components/Background';
@@ -15,12 +15,12 @@ function App() {
   const [card, setCard] = useState<Card | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const handleScoutUsername = async (username: string) => {
+  const handleScoutUsername = async (username: string, hero?: HeroType) => {
     setState('loading');
     setError(null);
     try {
       const signals = await fetchCodolioProfile(username);
-      const result = buildCard(signals);
+      const result = buildCard(signals, hero);
       setCard(result);
       setState('result');
     } catch (err: unknown) {

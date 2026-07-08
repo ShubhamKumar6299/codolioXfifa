@@ -1,4 +1,4 @@
-import type { CodolioSignals, Card, Stats, StatKey, Finish, Position } from './types';
+import type { CodolioSignals, Card, Stats, StatKey, Finish, Position, HeroType } from './types';
 import { STAT_KEYS } from './types';
 
 /* ── Math helpers ── */
@@ -108,7 +108,7 @@ function deriveFinish(overall: number): Finish {
 }
 
 /* ── Main: Build card from signals ── */
-export function buildCard(signals: CodolioSignals): Card {
+export function buildCard(signals: CodolioSignals, hero?: HeroType): Card {
   const raw = rawStats(signals);
   const profile = zscore(raw);
   const c = center(signals);
@@ -135,5 +135,6 @@ export function buildCard(signals: CodolioSignals): Card {
     name: signals.name || signals.username,
     username: signals.username,
     avatarUrl: signals.avatarUrl,
+    hero,
   };
 }

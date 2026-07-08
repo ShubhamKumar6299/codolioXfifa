@@ -912,3 +912,116 @@
 
   .result__header-name { font-size: 28px; }
 }
+
+/* ── Hero & Ninja Watermark Styles ── */
+.player-card__shuriken-watermark {
+  position: absolute;
+  right: -30px;
+  bottom: 20px;
+  width: 150px;
+  height: 150px;
+  opacity: 0.05;
+  color: var(--card-ink);
+  pointer-events: none;
+  z-index: 1;
+  transform-origin: center;
+  animation: shurikenSpin 25s linear infinite;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.player-card:hover .player-card__shuriken-watermark {
+  opacity: 0.12;
+  animation: shurikenSpin 6s linear infinite;
+}
+
+@keyframes shurikenSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.player-card__hero-badge {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  font-size: 24px;
+  opacity: 0.85;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+  transition: transform 0.3s ease;
+  z-index: 5;
+}
+
+.player-card:hover .player-card__hero-badge {
+  transform: scale(1.15) rotate(10deg);
+}
+
+/* Hero Selection Section */
+.scout-form__hero-section {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.scout-form__hero-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.scout-form__hero-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.scout-form__hero-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 6px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-strong);
+  background: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+}
+
+.scout-form__hero-card:hover {
+  background: var(--bg-surface-hover);
+  border-color: var(--accent-border);
+  transform: translateY(-2px);
+  color: var(--text-primary);
+}
+
+.scout-form__hero-card--selected {
+  background: rgba(255, 184, 0, 0.1) !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 15px rgba(255, 184, 0, 0.15);
+  color: var(--accent) !important;
+}
+
+.scout-form__hero-icon {
+  font-size: 20px;
+  margin-bottom: 4px;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+}
+
+.scout-form__hero-name {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* Adjust column count on mobile */
+@media (max-width: 480px) {
+  .scout-form__hero-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
