@@ -49,10 +49,19 @@
   animation: float3 20s ease-in-out infinite;
 }
 
-.bg-stadium {
+.bg-stadium-glow {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 130% 50% at 50% 0%, rgba(255,184,0,0.025) 0%, transparent 60%);
+  background:
+    radial-gradient(ellipse 120% 60% at 50% 100%, rgba(255,184,0,0.08) 0%, transparent 55%),
+    radial-gradient(ellipse 80% 40% at 50% 100%, rgba(255,107,53,0.05) 0%, transparent 50%),
+    radial-gradient(ellipse 160% 30% at 50% 100%, rgba(255,184,0,0.04) 0%, transparent 40%);
+  animation: glowPulse 6s ease-in-out infinite alternate;
+}
+
+@keyframes glowPulse {
+  from { opacity: 0.7; }
+  to { opacity: 1; }
 }
 
 @keyframes float1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-25px,35px) scale(1.03); } }
@@ -171,10 +180,10 @@
 }
 
 .scout-form__mascot-img {
-  width: 80px;
-  height: 80px;
+  width: 96px;
+  height: 96px;
   object-fit: contain;
-  filter: drop-shadow(0 4px 16px rgba(255,184,0,0.35));
+  filter: drop-shadow(0 4px 20px rgba(255,184,0,0.4));
   animation: mascotFloat 3s ease-in-out infinite;
   border-radius: 12px;
 }
