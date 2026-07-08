@@ -23,8 +23,13 @@ export default function ScoutForm({ loading, error, onScoutUsername }: Props) {
     <div className="scout-form">
       {/* Mascot / Logo */}
       <div className="scout-form__mascot">
-        <span className="scout-form__mascot-icon">⚽</span>
-        <span className="scout-form__mascot-code">{'</>'}</span>
+        <img
+          src="/codolioXfifa/mascot.png"
+          alt="CodolioXFifa mascot"
+          className="scout-form__mascot-img"
+          width={72}
+          height={72}
+        />
       </div>
 
       {/* Badge */}

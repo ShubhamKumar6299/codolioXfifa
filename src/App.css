@@ -167,30 +167,21 @@
 .scout-form__mascot {
   display: flex;
   align-items: center;
-  gap: 6px;
   margin-bottom: 20px;
 }
 
-.scout-form__mascot-icon {
-  font-size: 36px;
-  filter: drop-shadow(0 2px 8px rgba(255,184,0,0.3));
-  animation: bounce 2s ease-in-out infinite;
+.scout-form__mascot-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 16px rgba(255,184,0,0.35));
+  animation: mascotFloat 3s ease-in-out infinite;
+  border-radius: 12px;
 }
 
-.scout-form__mascot-code {
-  font-family: var(--font-mono);
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--accent);
-  background: var(--accent-soft);
-  padding: 3px 8px;
-  border-radius: 4px;
-  transform: rotate(-8deg);
-}
-
-@keyframes bounce {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+@keyframes mascotFloat {
+  0%,100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-8px) rotate(1deg); }
 }
 
 /* Badge */

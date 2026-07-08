@@ -148,18 +148,21 @@ export default function ResultView({ card, onBack }: Props) {
     }
   };
 
+  const SITE_URL = 'https://shubhamkumar6299.github.io/codolioXfifa/';
+
   const handleShare = () => {
-    const text = `⚽ My CodolioFun card: ${card.overall} OVR ${card.position}!\nStats — PAC ${card.stats.pac} | SHO ${card.stats.sho} | PAS ${card.stats.pas} | DRI ${card.stats.dri} | DEF ${card.stats.def} | PHY ${card.stats.phy}\n\nGet yours → codoliofun.vercel.app`;
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
-    window.open(twitterUrl, '_blank');
+    const text = `⚽ Just got my CodolioFun card — ${card.overall} OVR ${card.position} (${archetype.title})!\n\nPAC ${card.stats.pac} | SHO ${card.stats.sho} | PAS ${card.stats.pas} | DRI ${card.stats.dri} | DEF ${card.stats.def} | PHY ${card.stats.phy}\n\nGet your own card → ${SITE_URL}`;
+    const twitterUrl = `https://x.com/intent/tweet?text=${encodeURIComponent(text)}`;
+    window.open(twitterUrl, '_blank', 'noopener,noreferrer');
   };
 
   const handleLinkedIn = () => {
-    window.open('https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent('https://codoliofun.vercel.app'), '_blank');
+    const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(SITE_URL)}`;
+    window.open(linkedInUrl, '_blank', 'noopener,noreferrer');
   };
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(`https://codoliofun.vercel.app`);
+    navigator.clipboard.writeText(SITE_URL);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
