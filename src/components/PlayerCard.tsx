@@ -1,5 +1,5 @@
 import { memo, type CSSProperties } from 'react';
-import type { Card, StatKey } from '../lib/types';
+import type { Card, StatKey, HeroType } from '../lib/types';
 import { resolveCardTheme } from '../lib/cardTheme';
 
 const AVATAR_FALLBACK =
@@ -19,17 +19,29 @@ const STAT_CELLS: { k: StatKey; l: string; col: number; row: number }[] = [
   { k: 'phy', l: 'PHY', col: 1, row: 2 },
 ];
 
-function getHeroEmoji(hero?: string): string {
-  switch (hero) {
-    case 'spider-man': return '🕷️';
-    case 'batman': return '🦇';
-    case 'iron-man': return '🤖';
-    case 'joker': return '🃏';
-    case 'captain-america': return '🛡️';
-    case 'ninja': return '🥷';
-    default: return '';
-  }
-}
+const HERO_RING_COLORS: Record<HeroType, string> = {
+  'spider-man': '#ef4444',
+  'batman': '#f59e0b',
+  'superman': '#3b82f6',
+  'iron-man': '#f97316',
+  'captain-america': '#2563eb',
+  'thor': '#60a5fa',
+  'wonder-woman': '#fbbf24',
+  'black-widow': '#dc2626',
+  'scarlet-witch': '#c084fc',
+};
+
+const HERO_INITIALS: Record<HeroType, string> = {
+  'spider-man': 'SM',
+  'batman': 'B',
+  'superman': 'S',
+  'iron-man': 'IM',
+  'captain-america': 'CA',
+  'thor': 'T',
+  'wonder-woman': 'WW',
+  'black-widow': 'BW',
+  'scarlet-witch': 'SW',
+};
 
 function PlayerCard({ card, style }: { card: Card; style?: CSSProperties }) {
   const t = resolveCardTheme(card.finish, card.hero);
@@ -42,7 +54,10 @@ function PlayerCard({ card, style }: { card: Card; style?: CSSProperties }) {
     e.currentTarget.src = AVATAR_FALLBACK;
   };
 
-  const isDark = card.finish === 'totw' || card.finish === 'toty' || card.hero === 'batman' || card.hero === 'ninja' || card.hero === 'spider-man' || card.hero === 'iron-man' || card.hero === 'joker' || card.hero === 'captain-america';
+  const isDark = card.finish === 'totw' || card.finish === 'toty' || !!card.hero;
+
+  const heroColor = card.hero ? HERO_RING_COLORS[card.hero] : undefined;
+  const heroInitials = card.hero ? HERO_INITIALS[card.hero] : undefined;
 
   return (
     <div
@@ -56,6 +71,7 @@ function PlayerCard({ card, style }: { card: Card; style?: CSSProperties }) {
         '--card-glow': t.glow,
         '--card-stat-bar': t.statBar,
         '--card-badge': t.badge,
+        ...(heroColor ? { '--hero-ring': heroColor } as Record<string, string> : {}),
       } as CSSProperties}
     >
       {/* Glow border */}
@@ -63,7 +79,7 @@ function PlayerCard({ card, style }: { card: Card; style?: CSSProperties }) {
 
       {/* Card surface */}
       <div className="player-card__surface">
-        {/* Shuriken Ninja Watermark for Ninja Vibe */}
+        {/* Shuriken Ninja Watermark */}
         <div className="player-card__shuriken-watermark">
           <svg viewBox="0 0 100 100" fill="currentColor" width="100%" height="100%">
             <path d="M50 5 L58 42 L95 50 L58 58 L50 95 L42 58 L5 50 L42 42 Z M50 44 C46.7 44 44 46.7 44 50 C44 53.3 46.7 56 50 56 C53.3 56 56 53.3 56 50 C56 46.7 53.3 44 50 44 Z" />
@@ -76,15 +92,19 @@ function PlayerCard({ card, style }: { card: Card; style?: CSSProperties }) {
             <span className="player-card__overall">{pad2(card.overall)}</span>
             <span className="player-card__position">{card.position}</span>
           </div>
-          {card.hero && (
-            <div className="player-card__hero-badge" title={card.hero}>
-              {getHeroEmoji(card.hero)}
+          {heroInitials && (
+            <div
+              className="player-card__hero-badge"
+              title={card.hero}
+              style={{ background: heroColor }}
+            >
+              {heroInitials}
             </div>
           )}
         </div>
 
-        {/* Avatar */}
-        <div className="player-card__avatar-wrap">
+        {/* Avatar with hero ring */}
+        <div className={`player-card__avatar-wrap ${card.hero ? 'player-card__avatar-wrap--hero' : ''}`}>
           <img
             src={card.avatarUrl || AVATAR_FALLBACK}
             alt={card.name}
@@ -93,6 +113,7 @@ function PlayerCard({ card, style }: { card: Card; style?: CSSProperties }) {
             crossOrigin="anonymous"
           />
           <div className="player-card__avatar-fade" />
+          {card.hero && <div className="player-card__avatar-ring" />}
         </div>
 
         {/* Divider */}
@@ -114,9 +135,7 @@ function PlayerCard({ card, style }: { card: Card; style?: CSSProperties }) {
         </div>
 
         {/* Username watermark */}
-        <div className="player-card__username">
-          @{card.username} {card.hero ? getHeroEmoji(card.hero) : '⚽'}
-        </div>
+        <div className="player-card__username">@{card.username}</div>
       </div>
     </div>
   );

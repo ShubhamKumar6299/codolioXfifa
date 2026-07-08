@@ -920,17 +920,17 @@
   bottom: 20px;
   width: 150px;
   height: 150px;
-  opacity: 0.05;
+  opacity: 0.04;
   color: var(--card-ink);
   pointer-events: none;
   z-index: 1;
   transform-origin: center;
   animation: shurikenSpin 25s linear infinite;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.4s ease;
 }
 
 .player-card:hover .player-card__shuriken-watermark {
-  opacity: 0.12;
+  opacity: 0.10;
   animation: shurikenSpin 6s linear infinite;
 }
 
@@ -941,87 +941,254 @@
 
 .player-card__hero-badge {
   position: absolute;
-  top: 0px;
-  right: 0px;
-  font-size: 24px;
-  opacity: 0.85;
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
-  transition: transform 0.3s ease;
+  top: 4px;
+  right: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.9;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease, opacity 0.3s ease;
   z-index: 5;
 }
 
 .player-card:hover .player-card__hero-badge {
-  transform: scale(1.15) rotate(10deg);
+  transform: scale(1.15);
+  opacity: 1;
 }
 
-/* Hero Selection Section */
+/* Hero-themed avatar ring */
+.player-card__avatar-wrap--hero {
+  position: relative;
+}
+
+.player-card__avatar-ring {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 2.5px solid var(--hero-ring, var(--card-border));
+  box-shadow: 0 0 12px var(--hero-ring, transparent), inset 0 0 8px rgba(0,0,0,0.2);
+  pointer-events: none;
+  z-index: 3;
+  animation: ringPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes ringPulse {
+  from { opacity: 0.7; box-shadow: 0 0 8px var(--hero-ring, transparent); }
+  to { opacity: 1; box-shadow: 0 0 18px var(--hero-ring, transparent); }
+}
+
+/* Hero-specific card glows — neon-style on hover */
+.player-card--hero-spider-man .player-card__glow { background: linear-gradient(135deg, #ef4444, #1e3a8a, #ef4444); animation-duration: 2.2s; }
+.player-card--hero-batman .player-card__glow { background: linear-gradient(135deg, #f59e0b, #18181b, #f59e0b); animation-duration: 3s; }
+.player-card--hero-superman .player-card__glow { background: linear-gradient(135deg, #3b82f6, #dc2626, #3b82f6); animation-duration: 2.5s; }
+.player-card--hero-iron-man .player-card__glow { background: linear-gradient(135deg, #f97316, #7f1d1d, #f97316); animation-duration: 2s; }
+.player-card--hero-captain-america .player-card__glow { background: linear-gradient(135deg, #3b82f6, #ffffff, #ef4444); animation-duration: 2.8s; }
+.player-card--hero-thor .player-card__glow { background: linear-gradient(135deg, #60a5fa, #6d28d9, #60a5fa); animation-duration: 2.3s; }
+.player-card--hero-wonder-woman .player-card__glow { background: linear-gradient(135deg, #fbbf24, #b91c1c, #fbbf24); animation-duration: 2.6s; }
+.player-card--hero-black-widow .player-card__glow { background: linear-gradient(135deg, #dc2626, #09090b, #dc2626); animation-duration: 3.2s; }
+.player-card--hero-scarlet-witch .player-card__glow { background: linear-gradient(135deg, #c084fc, #7f1d1d, #c084fc); animation-duration: 2.4s; }
+
+/* ═══════════════════════════════════════════════════════════
+   Premium Hero Selection Section
+   ═══════════════════════════════════════════════════════════ */
+
 .scout-form__hero-section {
   width: 100%;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .scout-form__hero-label {
   display: block;
-  font-family: var(--font-mono);
-  font-size: 11px;
+  font-family: var(--font-heading);
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.15em;
-  color: var(--text-dim);
-  margin-bottom: 12px;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
   text-transform: uppercase;
 }
 
 .scout-form__hero-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
   gap: 10px;
   width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.15) transparent;
 }
 
+.scout-form__hero-grid::-webkit-scrollbar { height: 4px; }
+.scout-form__hero-grid::-webkit-scrollbar-track { background: transparent; }
+.scout-form__hero-grid::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+.scout-form__hero-grid::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+
 .scout-form__hero-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 10px 6px;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-strong);
-  background: rgba(0, 0, 0, 0.2);
+  padding: 14px 8px 10px;
+  border-radius: var(--radius-lg);
+  border: 1.5px solid var(--border-strong);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   color: var(--text-secondary);
   font-family: var(--font-body);
+  overflow: hidden;
+  isolation: isolate;
+  /* Show exactly 3 cards: calc((100% - 2*gap) / 3) */
+  min-width: calc((100% - 20px) / 3);
+  flex: 0 0 calc((100% - 20px) / 3);
+  scroll-snap-align: start;
+}
+
+/* Shine sweep on hover */
+.scout-form__hero-card-shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.06) 45%,
+    rgba(255, 255, 255, 0.12) 50%,
+    rgba(255, 255, 255, 0.06) 55%,
+    transparent 60%
+  );
+  transform: translateX(-150%);
+  transition: transform 0.6s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.scout-form__hero-card:hover .scout-form__hero-card-shine {
+  transform: translateX(150%);
 }
 
 .scout-form__hero-card:hover {
-  background: var(--bg-surface-hover);
-  border-color: var(--accent-border);
-  transform: translateY(-2px);
+  border-color: var(--hero-color, var(--accent-border));
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-3px);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.3),
+    0 0 0 1px var(--hero-color, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
   color: var(--text-primary);
 }
 
 .scout-form__hero-card--selected {
-  background: rgba(255, 184, 0, 0.1) !important;
-  border-color: var(--accent) !important;
-  box-shadow: 0 0 15px rgba(255, 184, 0, 0.15);
-  color: var(--accent) !important;
+  border-color: var(--hero-color, var(--accent)) !important;
+  background: linear-gradient(
+    160deg,
+    var(--hero-glow, rgba(255, 184, 0, 0.1)) 0%,
+    rgba(0, 0, 0, 0.3) 100%
+  ) !important;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 0 20px var(--hero-glow, rgba(255, 184, 0, 0.15)),
+    0 0 0 1.5px var(--hero-color, var(--accent)),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  transform: translateY(-2px);
 }
 
-.scout-form__hero-icon {
-  font-size: 20px;
-  margin-bottom: 4px;
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+.scout-form__hero-card--selected .scout-form__hero-card-shine {
+  transform: translateX(150%);
+}
+
+/* Hero initials avatar circle */
+.scout-form__hero-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 2;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.scout-form__hero-card:hover .scout-form__hero-avatar,
+.scout-form__hero-card--selected .scout-form__hero-avatar {
+  transform: scale(1.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 .scout-form__hero-name {
   font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  position: relative;
+  z-index: 2;
 }
 
-/* Adjust column count on mobile */
+.scout-form__hero-tagline {
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 2px;
+  position: relative;
+  z-index: 2;
+  transition: color 0.2s;
+}
+
+.scout-form__hero-card--selected .scout-form__hero-tagline {
+  color: var(--hero-color, var(--accent));
+}
+
+.scout-form__hero-check {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--hero-color, var(--accent));
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  animation: checkPop 0.3s var(--ease-out) both;
+}
+
+@keyframes checkPop {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Adjust to 2 visible cards on mobile */
 @media (max-width: 480px) {
-  .scout-form__hero-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .scout-form__hero-card {
+    min-width: calc((100% - 10px) / 2);
+    flex: 0 0 calc((100% - 10px) / 2);
   }
 }

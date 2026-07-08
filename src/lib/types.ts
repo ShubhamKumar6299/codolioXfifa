@@ -22,7 +22,7 @@ export interface CodolioSignals {
   reputation: number;
 }
 
-export type HeroType = 'spider-man' | 'batman' | 'iron-man' | 'joker' | 'captain-america' | 'ninja';
+export type HeroType = 'spider-man' | 'batman' | 'superman' | 'iron-man' | 'captain-america' | 'thor' | 'wonder-woman' | 'black-widow' | 'scarlet-witch';
 
 export interface Card {
   signals: CodolioSignals;
