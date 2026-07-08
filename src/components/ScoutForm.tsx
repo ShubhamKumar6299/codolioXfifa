@@ -24,7 +24,7 @@ export default function ScoutForm({ loading, error, onScoutUsername }: Props) {
       {/* Mascot / Logo */}
       <div className="scout-form__mascot">
         <img
-          src="/codolioXfifa/mascot.png"
+          src={`${import.meta.env.BASE_URL}mascot.png`}
           alt="CodolioXFifa mascot"
           className="scout-form__mascot-img"
           width={96}
