@@ -9,7 +9,7 @@ interface Props {
   onScoutManual: (signals: CodolioSignals) => void;
 }
 
-const EXAMPLE_USERNAMES = ['ToUrIsT45', 'striver_79', 'aryan_0077'];
+const EXAMPLE_USERNAMES = ['ToUrIsT45'];
 
 export default function ScoutForm({ loading, error, onScoutUsername }: Props) {
   const [username, setUsername] = useState('');
